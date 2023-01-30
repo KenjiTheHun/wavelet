@@ -6,27 +6,22 @@ class Handler implements URLHandler {
     ArrayList<String> searches = new ArrayList<String>();
 
     public String handleRequest(URI url) {
-        if (url.getPath().contains("/add")) {
+        if (url.getPath().contains("/add-message")) {
             String[] parameters = url.getQuery().split("=");
             if (parameters[0].equals("s")) {
                 searches.add(parameters[1]);
-                return String.format("Added %s", parameters[1]);
-            }
-        }
-        else if (url.getPath().contains("/search")) {
-            String [] parameters = url.getQuery().split("=");
-            for (String element: searches) {
-                if (element.contains(parameters[1])) {
-                    
+                String result = "";
+                for (String element : searches) {
+                    result += element + '\n';
                 }
+                return result;
             }
-
         }
         return "404 Not Found";
     }
 }
 
-class SearchEngine {
+class StringServer {
     public static void main(String[] args) throws IOException {
         if(args.length == 0){
             System.out.println("Missing port number! Try any number between 1024 to 49151");
